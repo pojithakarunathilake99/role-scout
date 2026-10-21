@@ -16,6 +16,7 @@ export interface Job {
   postedAt?: string
   match?: { score: number; reason: string; sponsorship: 'offered' | 'not offered' | 'not mentioned' }
   sponsor?: { level: 'exact' | 'possible' | 'agency' | 'none'; name?: string }
+  tailored?: { cv: string; fit: string; strengths: string[]; gaps: string[]; keywords: string[]; changes: string[]; issues?: { line: string; problem: string }[]; at: string }
   status: JobStatus
   history: { status: JobStatus; at: string; by: 'manual' | 'gmail' }[]
   savedAt: string

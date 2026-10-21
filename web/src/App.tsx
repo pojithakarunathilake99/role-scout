@@ -6,8 +6,9 @@ import { extractCvText, extractProfile } from './lib/cv'
 import DiscoverPage from './DiscoverPage'
 import HelpPage from './HelpPage'
 import AgentPage from './AgentPage'
+import TailorPage from './TailorPage'
 
-type Route = { page: 'dashboard' | 'discover' | 'profile' | 'settings' | 'job' | 'help' | 'agent'; id?: string }
+type Route = { page: 'dashboard' | 'discover' | 'profile' | 'settings' | 'job' | 'help' | 'agent' | 'tailor'; id?: string }
 type Profile = {
   name: string
   targetTitles: string
@@ -28,6 +29,7 @@ const emptyStatusCounts: Record<JobStatus, number> = { saved: 0, applied: 0, int
 function readRoute(): Route {
   const raw = window.location.hash.replace(/^#\/?/, '')
   if (raw.startsWith('job/')) return { page: 'job', id: decodeURIComponent(raw.slice(4)) }
+  if (raw.startsWith('tailor/')) return { page: 'tailor', id: decodeURIComponent(raw.slice(7)) }
   if (raw === 'dashboard' || raw === 'profile' || raw === 'settings' || raw === 'help' || raw === 'agent') return { page: raw }
   return { page: 'discover' }
 }
@@ -546,7 +548,7 @@ function App() {
           <section className="panel">
             <div className="panel-head"><h2>Application kit</h2><span className="panel-caption">AI assist</span></div>
             <p className="save-hint" style={{ lineHeight: 1.6, marginBottom: 14 }}>Prepare role-specific material from the experience in your profile.</p>
-            <div style={{ display: 'grid', gap: 8 }}><button className="button ghost" onClick={() => notify('Tailor CV is a placeholder. Add a writing model to enable this workflow.')}>Tailor CV</button><button className="button ghost" onClick={() => notify('Cover letter is a placeholder. Add a writing model to enable this workflow.')}>Cover letter</button></div>
+            <div style={{ display: 'grid', gap: 8 }}><button className="button ghost" onClick={() => go(`tailor/${encodeURIComponent(activeJob.id)}`)}>Tailor CV</button><button className="button ghost" onClick={() => notify('Cover letter is a placeholder. Add a writing model to enable this workflow.')}>Cover letter</button></div>
           </section>
         </aside>
       </div>
@@ -635,7 +637,7 @@ function App() {
     return <footer className="footer"><span>RoleScout · Your AI job scout.</span><span><a href="https://buymeacoffee.com/pojithah99" target="_blank" rel="noreferrer">☕ Buy me a coffee</a> · Jobs by <a href="https://www.adzuna.com/" target="_blank" rel="noreferrer">Adzuna</a></span></footer>
   }
 
-  const pageTitle: Record<Route['page'], string> = { dashboard: 'Workspace', discover: 'Discover', profile: 'Profile', settings: 'Settings', job: 'Opportunity', help: 'How to use', agent: 'Agent' }
+  const pageTitle: Record<Route['page'], string> = { dashboard: 'Workspace', discover: 'Discover', profile: 'Profile', settings: 'Settings', job: 'Opportunity', help: 'How to use', agent: 'Agent', tailor: 'Tailor CV' }
   return <div className="shell grid min-h-screen">
     <aside className="sidebar">
       <button className="brand" onClick={() => go('dashboard')} aria-label="RoleScout workspace"><img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" width={30} height={30} /><span><span className="brand-name">RoleScout</span><span className="brand-caption">your AI job scout</span></span></button>
@@ -654,6 +656,7 @@ function App() {
         {route.page === 'discover' && <DiscoverPage profile={profile} notify={message => notify(message)} />}
         {route.page === 'help' && <HelpPage notify={message => notify(message)} />}
         {route.page === 'agent' && <AgentPage profile={profile} notify={message => notify(message)} />}
+        {route.page === 'tailor' && <TailorPage jobId={route.id ?? ''} profile={profile} notify={message => notify(message)} />}
         {route.page === 'profile' && ProfilePage()}
         {route.page === 'settings' && SettingsPage()}
       </main>
