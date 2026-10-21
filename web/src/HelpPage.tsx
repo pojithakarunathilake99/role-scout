@@ -2,7 +2,7 @@ import { useState } from 'react'
 import GettingStarted from './GettingStarted'
 import KeyGuide from './KeyGuide'
 import ClaudeConnector from './ClaudeConnector'
-import { WelcomeCard } from './Welcome'
+import { FEEDBACK_URL, WelcomeCard } from './Welcome'
 import { getSetting, listJobs } from './lib/db'
 import { getLLMConfig } from './lib/llm'
 
@@ -113,6 +113,14 @@ export default function HelpPage({ notify }: { notify: (m: string) => void }) {
         <p className="text-xs opacity-60" style={{ marginTop: 8 }}>
           Note: importing saved jobs from the extension into the app is still being built.
         </p>
+      </section>
+
+      <section className="panel" style={{ padding: 18, marginBottom: 16, borderLeft: '4px solid var(--accent)' }}>
+        <h2 className="font-semibold" style={{ fontSize: 17 }}>💬 Share your feedback</h2>
+        <p className="text-sm opacity-75" style={{ marginTop: 4, marginBottom: 12, lineHeight: 1.6 }}>
+          Takes about 2 minutes, with no account needed. Tell us what works, what's confusing, and what you'd like next. It directly shapes what we build.
+        </p>
+        <a className="button primary" href={FEEDBACK_URL} target="_blank" rel="noreferrer">Open feedback form</a>
       </section>
 
       <section className="panel" style={{ padding: 18, marginBottom: 16 }}>
