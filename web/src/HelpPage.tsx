@@ -71,7 +71,27 @@ export default function HelpPage({ notify }: { notify: (m: string) => void }) {
 
       <WelcomeCard />
 
-      <GettingStarted />
+      <section className="panel" style={{ padding: 18, marginBottom: 16 }}>
+        <h2 className="font-semibold" style={{ fontSize: 17 }}>Two ways to use RoleScout</h2>
+        <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', marginTop: 12 }}>
+          <div style={{ border: '1px solid var(--line)', borderRadius: 10, padding: 14 }}>
+            <strong>🌐 Web app</strong>
+            <p className="text-sm opacity-75" style={{ marginTop: 6, lineHeight: 1.6 }}>
+              Discover, the AI agent, job tracking, CV tailoring and the Chrome extension. Needs a free AI key (Gemini or Groq) and an Adzuna key.
+            </p>
+            <a className="button small" style={{ marginTop: 10 }} href="#getting-started" onClick={e => { e.preventDefault(); document.getElementById('getting-started')?.scrollIntoView({ behavior: 'smooth' }) }}>Set up the web app</a>
+          </div>
+          <div style={{ border: '1px solid var(--gold)', borderRadius: 10, padding: 14 }}>
+            <strong>✳️ Inside Claude (easiest)</strong>
+            <p className="text-sm opacity-75" style={{ marginTop: 6, lineHeight: 1.6 }}>
+              Add RoleScout as a connector in Claude. Claude does the AI work, so <strong>no AI key is needed</strong>, just a free Adzuna key for job search.
+            </p>
+            <a className="button small primary" style={{ marginTop: 10 }} href="#claude-connector" onClick={e => { e.preventDefault(); document.getElementById('claude-connector')?.scrollIntoView({ behavior: 'smooth' }) }}>Use it in Claude</a>
+          </div>
+        </div>
+      </section>
+
+      <div id="getting-started"><GettingStarted /></div>
 
       <KeyGuide />
 

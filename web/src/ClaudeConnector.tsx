@@ -29,7 +29,7 @@ export default function ClaudeConnector({ notify }: { notify: (m: string) => voi
   }
   const pre = { whiteSpace: 'pre-wrap' as const, fontSize: 12, background: 'var(--surface-2)', padding: 10, borderRadius: 8, marginTop: 8 }
   return (
-    <section className="panel" style={{ padding: 18, marginBottom: 16, borderLeft: '4px solid var(--gold)' }}>
+    <section id="claude-connector" className="panel" style={{ padding: 18, marginBottom: 16, borderLeft: '4px solid var(--gold)' }}>
       <h2 className="font-semibold" style={{ fontSize: 17 }}>✳️ Use RoleScout inside Claude</h2>
       <p className="text-sm opacity-75" style={{ marginTop: 4, lineHeight: 1.6 }}>
         Add RoleScout as a connector in Claude. Claude reads your CV, ranks jobs, tailors your CV and writes cover letters, while RoleScout provides

@@ -11,7 +11,7 @@ export function WelcomeCard() {
       </p>
       <p className="text-sm" style={{ marginTop: 8, lineHeight: 1.7 }}>
         <strong>The only thing you need:</strong> a free <strong>Gemini</strong> (or Groq) AI key and a free <strong>Adzuna</strong> key.
-        Both take about 2 minutes, and the guide below shows you how. Your keys and CV stay in your browser and are never sent to us.
+        Both take about 2 minutes, and the guide below shows you how. Or skip AI keys entirely and use RoleScout inside Claude (see below). Your keys and CV stay in your browser and are never sent to us.
       </p>
       <p className="text-sm" style={{ marginTop: 8, lineHeight: 1.7 }}>
         <strong>Help us improve:</strong> RoleScout is new, and your feedback shapes what comes next. Tell us what works, what's confusing and what's missing.
