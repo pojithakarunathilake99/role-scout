@@ -61,7 +61,7 @@ export default function Landing() {
           ))}
         </div>
         <h1 style={{ fontSize: 'clamp(30px, 6vw, 52px)', lineHeight: 1.1, fontWeight: 800, letterSpacing: '-0.02em' }}>
-          Find jobs that fit you, and know who can <span style={{ color: 'var(--accent)' }}>sponsor your visa</span>.
+          Let an AI agent find jobs that <span style={{ color: 'var(--accent)' }}>fit you</span>.
         </h1>
         <p style={{ margin: '18px auto 0', maxWidth: 640, fontSize: 'clamp(15px, 2.2vw, 18px)', color: 'var(--muted)', lineHeight: 1.6 }}>
           RoleScout is an AI job scout. It searches live jobs, scores how well each one fits your CV, flags UK visa sponsors, and tracks your applications. Free, with no account needed.
