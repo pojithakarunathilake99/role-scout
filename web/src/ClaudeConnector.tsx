@@ -1,4 +1,4 @@
-const MCP_URL = 'https://rolescout-mcp.rolecout.workers.dev/mcp'
+const MCP_URL = 'https://mcp.rolescout.online/mcp'
 
 const PROMPT_FIND = `You are my job-search agent. Use the RoleScout tools.
 1. Read my attached CV. Pick 4–6 job titles that genuinely fit my experience.

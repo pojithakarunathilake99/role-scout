@@ -25,7 +25,7 @@ const FAQ = [
 
 export default function Landing() {
   const [copied, setCopied] = useState(false)
-  const MCP_URL = 'https://rolescout-mcp.rolecout.workers.dev/mcp'
+  const MCP_URL = 'https://mcp.rolescout.online/mcp'
   // Landing page is always dark; restore the app's theme when leaving
   useEffect(() => {
     const root = document.documentElement

@@ -3,6 +3,10 @@ main = "src/index.ts"
 compatibility_date = "2025-09-01"
 compatibility_flags = ["global_fetch_strictly_public"]
 
+routes = [
+  { pattern = "mcp.rolescout.online", custom_domain = true }
+]
+
 [[kv_namespaces]]
 binding = "OAUTH_KV"
 id = "fab77ea133b44d0bae46ecb97359aada"

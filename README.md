@@ -93,7 +93,7 @@ A run takes 1–3 minutes. The saved picks appear in **Workspace**, with "Agent 
 
 RoleScout is also available as a **connector for Claude**. Claude does the AI work (reading your CV, ranking jobs, tailoring your CV and writing cover letters), and RoleScout provides **live jobs** and **UK visa-sponsor checks**. You don't need an AI key, just a free Adzuna key for job search. Sponsor checks work without one.
 
-**Connector URL:** `https://rolescout-mcp.rolecout.workers.dev/mcp`
+**Connector URL:** `https://mcp.rolescout.online/mcp`
 
 ### Set up (about 2 minutes)
 1. In Claude, open **Settings → Connectors → Add custom connector**.

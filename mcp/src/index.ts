@@ -263,8 +263,8 @@ export default new OAuthProvider<Env>({
   clientRegistrationEndpoint: '/register',
   clientIdMetadataDocumentEnabled: true,
   resourceMetadata: {
-    resource: 'https://rolescout-mcp.rolecout.workers.dev/mcp',
-    authorization_servers: ['https://rolescout-mcp.rolecout.workers.dev'],
+    resource: 'https://mcp.rolescout.online/mcp',
+    authorization_servers: ['https://mcp.rolescout.online'],
     resource_name: 'RoleScout',
   },
 })
