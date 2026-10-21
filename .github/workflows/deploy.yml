@@ -30,7 +30,7 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - run: mkdir -p web/public/data && cp data/sponsors.json web/public/data/
+      - run: mkdir -p web/public/data && cp -r data/. web/public/data/
       - run: cd extension && zip -r ../web/public/rolescout-extension.zip . -x '*.DS_Store'
       - run: npm ci
         working-directory: web

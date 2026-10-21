@@ -64,3 +64,21 @@ writeFileSync('data/sponsors.json', JSON.stringify({
   types, routes, count: sponsors.length, sponsors,
 }));
 console.log(`registerDate=${registerDate} rows=${rows.length} sponsors=${sponsors.length} types=${types.length} routes=${routes.length}`);
+
+// ---- Shards for the MCP connector: data/sponsors/<first-2-chars>.json ----
+import { rmSync } from 'node:fs'
+rmSync('data/sponsors', { recursive: true, force: true })
+mkdirSync('data/sponsors', { recursive: true })
+const shards = new Map()
+for (const s of sponsors) {
+  const n = normalize(s[0])
+  if (!n) continue
+  const key = n.slice(0, 2).replace(/ /g, '_')
+  if (!shards.has(key)) shards.set(key, {})
+  const bucket = shards.get(key)
+  ;(bucket[n] ??= []).push(s)
+}
+for (const [key, entries] of shards)
+  writeFileSync(`data/sponsors/${key}.json`, JSON.stringify({ registerDate, types, routes, entries }))
+writeFileSync('data/sponsors/meta.json', JSON.stringify({ registerDate, count: sponsors.length, shards: shards.size }))
+console.log(`shards=${shards.size}`)
