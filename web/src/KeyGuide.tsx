@@ -1,3 +1,4 @@
+import AdzunaVideo from './AdzunaVideo'
 interface Guide { id: string; name: string; badge: string; why: string; link: string; steps: string[] }
 
 const GUIDES: Guide[] = [
@@ -52,6 +53,7 @@ export default function KeyGuide() {
             <ol className="text-sm" style={{ paddingLeft: 18, listStyle: 'decimal', lineHeight: 1.8 }}>
               {g.steps.map(s => <li key={s}>{s}</li>)}
             </ol>
+            {g.id === 'adzuna' && <AdzunaVideo />}
             <a className="button small primary" style={{ marginTop: 10 }} href={g.link} target="_blank" rel="noreferrer">Open {g.name}</a>
           </details>
         ))}

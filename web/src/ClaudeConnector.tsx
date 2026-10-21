@@ -1,3 +1,4 @@
+import AdzunaVideo from './AdzunaVideo'
 const MCP_URL = 'https://mcp.rolescout.online/mcp'
 
 const PROMPT_FIND = `You are my job-search agent. Use the RoleScout tools.
@@ -58,6 +59,7 @@ export default function ClaudeConnector({ notify }: { notify: (m: string) => voi
           <li>Paste both on the <strong>Connect RoleScout</strong> page when Claude asks you to sign in.</li>
         </ol>
         <p className="text-xs opacity-60" style={{ marginTop: 4 }}>Free, with no card needed: about 1,000 searches a month.</p>
+        <AdzunaVideo />
       </details>
       <details style={{ marginTop: 8 }}>
         <summary className="text-sm" style={{ cursor: 'pointer', fontWeight: 600 }}>Prompt: find and rank jobs</summary>
