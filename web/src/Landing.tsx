@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FEEDBACK_URL } from './Welcome'
 
 const REPO = 'https://github.com/pojithakarunathilake99/role-scout'
@@ -24,6 +24,8 @@ const FAQ = [
 ]
 
 export default function Landing() {
+  const [copied, setCopied] = useState(false)
+  const MCP_URL = 'https://rolescout-mcp.rolecout.workers.dev/mcp'
   // Landing page is always dark; restore the app's theme when leaving
   useEffect(() => {
     const root = document.documentElement
@@ -45,6 +47,7 @@ export default function Landing() {
         </span>
         <nav className="flex items-center gap-4 text-sm" style={{ marginLeft: 'auto' }}>
           <a href="#how" onClick={e => { e.preventDefault(); document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' }) }} className="hidden sm:inline opacity-80">How it works</a>
+          <a href="#claude" onClick={e => { e.preventDefault(); document.getElementById('claude')?.scrollIntoView({ behavior: 'smooth' }) }} className="hidden sm:inline opacity-80">In Claude</a>
           <a href="#faq" onClick={e => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }) }} className="hidden sm:inline opacity-80">FAQ</a>
           <a className="button small primary" href="#/discover">Open app</a>
         </nav>
@@ -68,6 +71,53 @@ export default function Landing() {
           <a className="button" href="#/discover" style={{ padding: '12px 22px', fontSize: 16 }}>Open the app</a>
         </div>
         <p className="text-xs" style={{ marginTop: 12, color: 'var(--muted)' }}>Setup takes about 5 minutes: upload your CV and add two free API keys.</p>
+        <a href="#claude" onClick={e => { e.preventDefault(); document.getElementById('claude')?.scrollIntoView({ behavior: 'smooth' }) }} className="text-sm" style={{ display: 'inline-block', marginTop: 14, padding: '6px 14px', borderRadius: 99, border: '1px solid var(--gold)', color: 'var(--gold)', fontWeight: 600 }}>
+          ✳️ New: use RoleScout inside Claude →
+        </a>
+      </section>
+
+      {/* RoleScout inside Claude */}
+      <section id="claude" style={{ maxWidth: 1080, margin: '0 auto', padding: '32px 20px' }}>
+        <div className="panel" style={{ padding: 28, borderLeft: '4px solid var(--gold)' }}>
+          <div className="flex flex-wrap items-center gap-8">
+            <div className="flex-1" style={{ minWidth: 280 }}>
+              <span className="text-xs" style={{ padding: '4px 10px', borderRadius: 99, background: 'var(--gold)', color: '#111', fontWeight: 800 }}>NEW</span>
+              <h2 style={{ fontSize: 28, fontWeight: 800, marginTop: 12, lineHeight: 1.15 }}>RoleScout, inside Claude</h2>
+              <p style={{ marginTop: 10, color: 'var(--muted)', lineHeight: 1.65 }}>
+                Add RoleScout as a connector and just ask: <em>“Find embedded jobs in the UK that sponsor visas, and tailor my CV for the best one.”</em>
+                Claude searches live jobs, checks the UK sponsor register, and writes your tailored CV and cover letter. <strong style={{ color: 'var(--ink)' }}>No AI key needed.</strong>
+              </p>
+              <ul style={{ marginTop: 14, lineHeight: 1.9, fontSize: 14 }}>
+                <li>✓ Live jobs in 16 countries</li>
+                <li>✓ UK visa-sponsor checks, updated daily</li>
+                <li>✓ CV tailoring and cover letters written by Claude</li>
+                <li>✓ Your CV stays inside Claude</li>
+              </ul>
+              <div className="flex flex-wrap gap-3" style={{ marginTop: 18 }}>
+                <a className="button primary" href="#/help">Set it up in 2 minutes</a>
+                <button className="button" type="button" onClick={() => { void navigator.clipboard.writeText(MCP_URL).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) }) }}>
+                  {copied ? 'Copied ✓' : 'Copy connector URL'}
+                </button>
+              </div>
+              <p className="text-xs" style={{ marginTop: 12, color: 'var(--muted)' }}>
+                Built on the open Model Context Protocol (MCP), so it also works with other MCP-compatible AI tools.
+              </p>
+            </div>
+            <div className="flex-1" style={{ minWidth: 280 }}>
+              <div className="text-xs" style={{ color: 'var(--muted)', marginBottom: 6 }}>Example conversation</div>
+              <div className="panel" style={{ padding: 16, fontSize: 13, lineHeight: 1.55 }}>
+                <div style={{ background: 'var(--accent-soft)', color: 'var(--ink)', padding: '8px 12px', borderRadius: 12, marginLeft: 'auto', maxWidth: '85%' }}>
+                  Here’s my CV. Find IoT jobs near Birmingham that can sponsor my visa.
+                </div>
+                <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 12, color: 'var(--muted)', margin: '10px 0 4px' }}>🔧 search_jobs · “IoT Engineer” · gb · West Midlands</div>
+                <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 12, color: 'var(--muted)', marginBottom: 10 }}>🔧 check_uk_sponsor · “Arm Ltd” → licensed sponsor ✓</div>
+                <div style={{ background: 'var(--surface-2)', padding: '8px 12px', borderRadius: 12, maxWidth: '90%' }}>
+                  I found 12 matching roles. Here’s your ranked shortlist with fit scores, sponsor status and links. Want me to tailor your CV for the top one?
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* How it works */}
