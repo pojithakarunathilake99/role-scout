@@ -50,6 +50,16 @@ export default function ClaudeConnector({ notify }: { notify: (m: string) => voi
       </ol>
 
       <details style={{ marginTop: 10 }}>
+        <summary className="text-sm" style={{ cursor: 'pointer', fontWeight: 600 }}>How do I get a free Adzuna key?</summary>
+        <ol className="text-sm" style={{ marginTop: 6, paddingLeft: 18, listStyle: 'decimal', lineHeight: 1.8 }}>
+          <li>Go to <a className="text-link" href="https://developer.adzuna.com/signup" target="_blank" rel="noreferrer">developer.adzuna.com/signup</a> and register (name, email, password).</li>
+          <li>Confirm your email if asked, then log in to the developer dashboard.</li>
+          <li>Copy your <strong>Application ID</strong> (short) and <strong>Application Key</strong> (long).</li>
+          <li>Paste both on the <strong>Connect RoleScout</strong> page when Claude asks you to sign in.</li>
+        </ol>
+        <p className="text-xs opacity-60" style={{ marginTop: 4 }}>Free, with no card needed: about 1,000 searches a month.</p>
+      </details>
+      <details style={{ marginTop: 8 }}>
         <summary className="text-sm" style={{ cursor: 'pointer', fontWeight: 600 }}>Prompt: find and rank jobs</summary>
         <pre style={pre}>{PROMPT_FIND}</pre>
         <button className="button small" style={{ marginTop: 6 }} onClick={() => copy(PROMPT_FIND, 'Prompt copied.')}>Copy prompt</button>

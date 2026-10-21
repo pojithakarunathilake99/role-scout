@@ -203,7 +203,13 @@ p{color:#94a3b8;font-size:14px}label{display:block;font-size:13px;margin-top:12p
 ${error ? `<div class="err">${esc(error)}</div>` : ''}
 <label>Adzuna app ID<input name="adzunaId" autocomplete="off"></label>
 <label>Adzuna app key<input name="adzunaKey" type="password" autocomplete="off"></label>
-<p>Free keys in 2 minutes: <a href="https://developer.adzuna.com/signup" target="_blank" rel="noreferrer">developer.adzuna.com/signup</a>. They're stored encrypted and only used for your own searches.</p>
+<p style="margin-bottom:4px"><b>No Adzuna key yet?</b> It's free and takes 2 minutes:</p>
+<ol style="color:#94a3b8;font-size:13px;padding-left:18px;margin:4px 0 8px;line-height:1.7">
+<li>Register at <a href="https://developer.adzuna.com/signup" target="_blank" rel="noreferrer">developer.adzuna.com/signup</a></li>
+<li>Confirm your email and log in</li>
+<li>Copy your <b>Application ID</b> and <b>Application Key</b> into the boxes above</li>
+</ol>
+<p>Your keys are stored encrypted and only used for your own searches.</p>
 <div class="row"><button class="skip" name="action" value="skip">Skip (sponsor checks only)</button><button class="go" name="action" value="connect">Connect</button></div>
 </form></body></html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } })
 }
