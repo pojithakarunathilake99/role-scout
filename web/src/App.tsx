@@ -5,6 +5,7 @@ import { generateJSON, getLLMConfig, PROVIDER_DEFAULTS, type Provider } from './
 import { extractCvText, extractProfile } from './lib/cv'
 import DiscoverPage from './DiscoverPage'
 import HelpPage from './HelpPage'
+import { FEEDBACK_URL } from './Welcome'
 import AgentPage from './AgentPage'
 import TailorPage from './TailorPage'
 
@@ -634,7 +635,7 @@ function App() {
   }
 
   function Footer() {
-    return <footer className="footer"><span>RoleScout · Your AI job scout.</span><span><a href="https://buymeacoffee.com/pojithah99" target="_blank" rel="noreferrer">☕ Buy me a coffee</a> · Jobs by <a href="https://www.adzuna.com/" target="_blank" rel="noreferrer">Adzuna</a></span></footer>
+    return <footer className="footer"><span>RoleScout · Your AI job scout.</span><span><a href={FEEDBACK_URL} target="_blank" rel="noreferrer">💬 Feedback</a> · <a href="https://buymeacoffee.com/pojithah99" target="_blank" rel="noreferrer">☕ Buy me a coffee</a> · Jobs by <a href="https://www.adzuna.com/" target="_blank" rel="noreferrer">Adzuna</a></span></footer>
   }
 
   const pageTitle: Record<Route['page'], string> = { dashboard: 'Workspace', discover: 'Discover', profile: 'Profile', settings: 'Settings', job: 'Opportunity', help: 'How to use', agent: 'Agent', tailor: 'Tailor CV' }
