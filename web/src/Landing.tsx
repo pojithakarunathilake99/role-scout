@@ -10,6 +10,7 @@ const FEATURES = [
   { icon: '🛂', title: 'UK visa sponsor check', text: "Each UK employer is checked against the Home Office sponsor register, updated daily. Agencies are flagged because the real employer is hidden." },
   { icon: '🌍', title: '15 countries', text: 'UK, India, Australia, New Zealand, Canada and nine European countries. Sri Lanka is coming soon.' },
   { icon: '📋', title: 'Application tracker', text: 'Save jobs and move them from Saved to Applied, Interview and Offer, with notes and history.' },
+  { icon: '✳️', title: 'Works inside Claude', text: 'Add RoleScout as a Claude connector: Claude searches live jobs, checks UK sponsors and tailors your CV. No AI key needed.' },
   { icon: '🧩', title: 'Chrome extension (beta)', text: 'Save the job you are viewing on LinkedIn, Indeed or CV-Library with one click.' },
 ]
 
@@ -18,6 +19,7 @@ const FAQ = [
   { q: 'Do I need a ChatGPT or Gemini subscription?', a: 'No. App subscriptions don’t include API keys anyway. A free Gemini API key is all you need, and the guide shows you how.' },
   { q: 'Does it apply to jobs for me?', a: 'No, never. It finds, scores and saves jobs. You review them and apply yourself.' },
   { q: 'Where is my data stored?', a: 'Only in your browser. Your CV, jobs and keys never reach our servers, because there are none. Export a backup anytime.' },
+  { q: 'Can I use RoleScout inside Claude?', a: 'Yes. Add it as a custom connector in Claude (Settings → Connectors) with the URL on the How to use page. Claude then searches live jobs, checks UK visa sponsors and tailors your CV, with no AI key needed.' },
   { q: 'Is the sponsor badge a guarantee?', a: 'No. It checks the official UK register, but a licensed sponsor may not sponsor every role. Always confirm with the employer.' },
 ]
 

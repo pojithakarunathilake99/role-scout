@@ -89,6 +89,53 @@ A run takes 1–3 minutes. The saved picks appear in **Workspace**, with "Agent 
 
 ---
 
+## Use RoleScout inside Claude (MCP connector)
+
+RoleScout is also available as a **connector for Claude**. Claude does the AI work (reading your CV, ranking jobs, tailoring your CV and writing cover letters), and RoleScout provides **live jobs** and **UK visa-sponsor checks**. You don't need an AI key, just a free Adzuna key for job search. Sponsor checks work without one.
+
+**Connector URL:** `https://rolescout-mcp.rolecout.workers.dev/mcp`
+
+### Set up (about 2 minutes)
+1. In Claude, open **Settings → Connectors → Add custom connector**.
+2. Name: `RoleScout`. URL: the connector URL above.
+3. Authentication: choose **Sign in now**, then click **Add** and **Connect**.
+4. On the **Connect RoleScout** page, enter your free [Adzuna app ID and key](https://developer.adzuna.com/signup), or click **Skip** for sponsor checks only.
+5. In a new chat, open **+ → Connectors**, enable **RoleScout**, attach your CV, and use a prompt below.
+
+### Tools Claude gets
+| Tool | What it does |
+|---|---|
+| `search_jobs` | Live job ads in 16 countries (title, company, location, salary, link, snippet) via Adzuna |
+| `check_uk_sponsor` | Checks a company against the UK Home Office Register of Licensed Sponsors (updated daily) and flags agencies |
+| `uk_sponsor_register_info` | Date and size of the register snapshot |
+
+### Prompt: find and rank jobs
+```text
+You are my job-search agent. Use the RoleScout tools.
+1. Read my attached CV. Pick 4–6 job titles that genuinely fit my experience.
+2. For each title, run search_jobs in the UK (country gb), ads from the last 21 days.
+3. Remove duplicates. Score my fit 0–100 for each promising job with a one-line reason. Be strict about seniority and missing core skills.
+4. I need a Skilled Worker visa: run check_uk_sponsor for every direct employer. For recruitment agencies, say the employer is hidden and sponsorship must be confirmed.
+5. Flag deal-breakers: security clearance, "no sponsorship", wrong seniority.
+Output a ranked table of the top 10: Score | Title | Company | Location | Salary | Sponsor status | Why | Link.
+Never invent jobs, companies or links; only use tool results.
+```
+
+### Prompt: tailor your CV and write a cover letter
+```text
+Tailor my CV for job #[N] from your list.
+Rules: never invent anything (no new employers, dates, titles, skills or achievements); keep every bullet under the SAME job it appears under in my CV; projects stay in Projects; UK English; ATS-friendly plain text.
+Give me: a fit summary, top strengths, gaps to prepare for (do NOT add them to the CV), the full tailored CV, what you changed and why, and a 250–300 word cover letter specific to this role.
+Then double-check against my original CV and confirm nothing was moved between jobs or invented.
+```
+
+### Privacy
+- Your CV stays inside Claude. The RoleScout server only receives search terms and company names.
+- Your Adzuna keys are stored encrypted by the connector's sign-in and used only for your own searches.
+- Disconnect anytime under **Settings → Connectors**.
+
+---
+
 ## Run locally (developers)
 
 Requirements: **Node.js 22+**, git.
