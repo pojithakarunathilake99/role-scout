@@ -9,6 +9,15 @@ const PROMPT_FIND = `You are my job-search agent. Use the RoleScout tools.
 Output a ranked table of the top 10: Score | Title | Company | Location | Salary | Sponsor status | Why | Link.
 Never invent jobs, companies or links; only use tool results.`
 
+const PROMPT_MULTI = `You are my job-search agent. Use the RoleScout tools.
+1. Read my attached CV. Pick 4–6 job titles that genuinely fit my experience.
+2. For each title, run search_jobs in the UK (gb), Australia (au), Canada (ca) and the Netherlands (nl), ads from the last 21 days. (Change the countries to the ones you want: gb, us, in, au, nz, ca, sg, de, fr, nl, it, es, at, be, ch, pl.)
+3. Remove duplicates. Score my fit 0–100 for each promising job with a one-line reason. Be strict about seniority and missing core skills.
+4. I need visa sponsorship. For UK jobs, run check_uk_sponsor for every direct employer. For other countries, note any visa or right-to-work wording in the ad (e.g. "sponsorship available", "must have right to work").
+5. Flag deal-breakers: security clearance, "no sponsorship", wrong seniority.
+Output a ranked table of the top 10 across all countries: Score | Title | Company | Country | Location | Salary | Visa notes | Why | Link.
+Never invent jobs, companies or links; only use tool results.`
+
 const PROMPT_TAILOR = `Tailor my CV for job #[N] from your list.
 Rules: never invent anything (no new employers, dates, titles, skills or achievements); keep every bullet under the SAME job it appears under in my CV; projects stay in Projects; UK English; ATS-friendly plain text.
 Give me: a fit summary, top strengths, gaps to prepare for (do NOT add them to the CV), the full tailored CV, what you changed and why, and a 250–300 word cover letter specific to this role.
@@ -44,6 +53,12 @@ export default function ClaudeConnector({ notify }: { notify: (m: string) => voi
         <summary className="text-sm" style={{ cursor: 'pointer', fontWeight: 600 }}>Prompt: find and rank jobs</summary>
         <pre style={pre}>{PROMPT_FIND}</pre>
         <button className="button small" style={{ marginTop: 6 }} onClick={() => copy(PROMPT_FIND, 'Prompt copied.')}>Copy prompt</button>
+      </details>
+      <details style={{ marginTop: 8 }}>
+        <summary className="text-sm" style={{ cursor: 'pointer', fontWeight: 600 }}>Prompt: find jobs in several countries</summary>
+        <pre style={pre}>{PROMPT_MULTI}</pre>
+        <button className="button small" style={{ marginTop: 6 }} onClick={() => copy(PROMPT_MULTI, 'Prompt copied.')}>Copy prompt</button>
+        <p className="text-xs opacity-60" style={{ marginTop: 6 }}>Job search works in 16 countries. The UK sponsor check only applies to UK employers.</p>
       </details>
       <details style={{ marginTop: 8 }}>
         <summary className="text-sm" style={{ cursor: 'pointer', fontWeight: 600 }}>Prompt: tailor your CV and write a cover letter</summary>

@@ -121,6 +121,19 @@ Output a ranked table of the top 10: Score | Title | Company | Location | Salary
 Never invent jobs, companies or links; only use tool results.
 ```
 
+### Prompt: find jobs in several countries
+```text
+You are my job-search agent. Use the RoleScout tools.
+1. Read my attached CV. Pick 4–6 job titles that genuinely fit my experience.
+2. For each title, run search_jobs in the UK (gb), Australia (au), Canada (ca) and the Netherlands (nl), ads from the last 21 days. (Change the countries to the ones you want: gb, us, in, au, nz, ca, sg, de, fr, nl, it, es, at, be, ch, pl.)
+3. Remove duplicates. Score my fit 0–100 for each promising job with a one-line reason. Be strict about seniority and missing core skills.
+4. I need visa sponsorship. For UK jobs, run check_uk_sponsor for every direct employer. For other countries, note any visa or right-to-work wording in the ad (e.g. "sponsorship available", "must have right to work").
+5. Flag deal-breakers: security clearance, "no sponsorship", wrong seniority.
+Output a ranked table of the top 10 across all countries: Score | Title | Company | Country | Location | Salary | Visa notes | Why | Link.
+Never invent jobs, companies or links; only use tool results.
+```
+The UK sponsor check only works for UK employers; for other countries Claude reads the ad for visa wording.
+
 ### Prompt: tailor your CV and write a cover letter
 ```text
 Tailor my CV for job #[N] from your list.
