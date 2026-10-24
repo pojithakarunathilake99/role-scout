@@ -2,6 +2,7 @@ import { useState } from 'react'
 import GettingStarted from './GettingStarted'
 import KeyGuide from './KeyGuide'
 import ClaudeConnector from './ClaudeConnector'
+import N8nCard from './N8nCard'
 import { FEEDBACK_URL, WelcomeCard } from './Welcome'
 import { getSetting, listJobs } from './lib/db'
 import { getLLMConfig } from './lib/llm'
@@ -96,6 +97,8 @@ export default function HelpPage({ notify }: { notify: (m: string) => void }) {
       <KeyGuide />
 
       <ClaudeConnector notify={notify} />
+
+      <N8nCard notify={notify} />
 
       <section className="panel" style={{ padding: 18, marginBottom: 16 }}>
         <h2 className="font-semibold" style={{ fontSize: 17 }}>Chrome extension</h2>

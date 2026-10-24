@@ -149,6 +149,46 @@ Then double-check against my original CV and confirm nothing was moved between j
 
 ---
 
+## Daily job emails with n8n (optional)
+
+Get a **daily email with new jobs that fit your CV**, automatically. A ready-made [n8n](https://n8n.io) workflow runs every morning: an AI agent uses the RoleScout connector to search live jobs, scores them against your CV, checks UK visa sponsors if you need them, and emails you the top 10.
+
+```
+Schedule (08:00) → Your settings → AI agent (Gemini + RoleScout tools) → Send email
+```
+
+**Template:** [`n8n/rolescout-daily-digest.json`](n8n/rolescout-daily-digest.json)
+
+### 1. Run n8n
+- **Free (self-hosted):** needs a machine that's on every morning.
+  ```bash
+  docker run -d --name n8n --restart unless-stopped -p 5678:5678 \
+    -e GENERIC_TIMEZONE=Europe/London -e TZ=Europe/London \
+    -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n
+  ```
+  Open http://localhost:5678 and create your account.
+- **Easiest:** n8n Cloud (14-day free trial, then paid).
+
+### 2. Import the template
+In n8n: **create a workflow → ⋯ menu → Import from URL**, then paste:
+```
+https://raw.githubusercontent.com/pojithakarunathilake99/role-scout/master/n8n/rolescout-daily-digest.json
+```
+
+### 3. Fill in 5 things
+1. **Your settings** node: `jobTitles`, `countries` (e.g. `gb, de, nl`), `location`, `maxDaysOld`, `minScore`, `needSponsorship`, `emailTo`, and paste your CV as plain text into `cvText`.
+2. **Google Gemini Chat Model**: add a credential with your free [Gemini key](https://aistudio.google.com/apikey). Model: `gemini-3.5-flash-lite`.
+3. **MCP Client Tool** (RoleScout): credential type **MCP OAuth2**, *Use Dynamic Client Registration* **on**, Server URL `https://mcp.rolescout.online/mcp`, then **Connect** and enter your free [Adzuna keys](https://developer.adzuna.com/signup) on the RoleScout page.
+4. **Send Email**: SMTP credential, e.g. Gmail with an [app password](https://myaccount.google.com/apppasswords): host `smtp.gmail.com`, port `465`, SSL on. Set **From Email**.
+5. Click **Execute workflow** to test, then **Publish** (or switch to **Active**) to run daily at 08:00.
+
+### Notes
+- The agent uses at most about 20 searches per run, so a daily run stays within Adzuna's free quota (about 1,000 a month).
+- The UK sponsor check only applies to UK jobs; for other countries the AI reads the ad for visa or work-permit wording.
+- Your CV and keys stay in **your** n8n. The RoleScout server only receives search terms and company names.
+
+---
+
 ## Run locally (developers)
 
 Requirements: **Node.js 22+**, git.
