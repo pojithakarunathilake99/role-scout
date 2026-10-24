@@ -1,0 +1,218 @@
+{
+  "name": "RoleScout daily job digest",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8867e95c-c463-42ce-b25c-ff59ed02be74",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7c602913-f71e-4666-ac71-985db96319b7",
+              "name": "jobTitles",
+              "value": "  Embedded Software Engineer, IoT Engineer, Embedded Linux Engineer, Lecturer in Computer Science, Lecturer in Artificial Intelligence, Teaching Fellow Computing, Teaching, Lecturer",
+              "type": "string"
+            },
+            {
+              "id": "6560feeb-b481-46e3-bd0f-5154a2ae043f",
+              "name": "countries",
+              "value": "gb, de, nl, ch, at, be, it, pl",
+              "type": "string"
+            },
+            {
+              "id": "8fe13b77-0041-4a19-b4d9-5801de302341",
+              "name": "location",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "2b391a3f-7e66-4f88-ae84-8f24e7553d40",
+              "name": "maxDaysOld",
+              "value": "3",
+              "type": "string"
+            },
+            {
+              "id": "ce744560-78a3-44ed-ba10-9e54e2246519",
+              "name": "minScore",
+              "value": "70",
+              "type": "string"
+            },
+            {
+              "id": "8ef33fd0-7cdb-4b3e-af9a-f33de0a555dd",
+              "name": "needSponsorship",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "4376f0cd-e0d8-4b43-9f91-67114d709353",
+              "name": "emailTo",
+              "value": "you@example.com",
+              "type": "string"
+            },
+            {
+              "id": "061e6f5d-6221-4d63-a12d-9cfa935c98e5",
+              "name": "cvText",
+              "value": "PASTE YOUR CV TEXT HERE (plain text, in the right order)",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "fd2bceac-95c2-40fb-b851-addfca3b4271",
+      "name": "Your settings."
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Today is {{ $now.toFormat('cccc d LLLL yyyy') }}.\n\nYou are my job-search agent. Use the RoleScout tools.\n\nMY SETTINGS\n- Job titles: {{ $json.jobTitles }}\n- Countries (codes): {{ $json.countries }}\n- Location (optional, UK only): {{ $json.location }}\n- Only ads from the last {{ $json.maxDaysOld }} days\n- Minimum fit score: {{ $json.minScore }}\n- I need visa sponsorship: {{ $json.needSponsorship ? 'yes' : 'no' }}\n\nMY CV\n{{ $json.cvText }}\n\nTASK\n1. Run search_jobs for my job titles across my countries (max_days_old = {{ $json.maxDaysOld }}, limit 10). Use AT MOST 20 searches in total: prioritise the titles that best match my CV and spread them across the countries. Use the location only for gb, if set.\n2. Remove duplicates. Score each job 0–100 for fit against my CV, strictly (seniority, core skills, language requirements).\n3. Keep only jobs scoring >= {{ $json.minScore }}.\n4. If I need visa sponsorship: for gb jobs run check_uk_sponsor on each direct employer; for other countries note any visa, work-permit or language wording in the ad. Drop jobs whose ad says sponsorship is not available.\n5. Never invent jobs, companies or links. Only use tool results.\n\nOUTPUT\nReturn ONLY an HTML email body (no markdown, no code fences) with:\n- One intro line: how many searches you ran and how many jobs you shortlisted.\n- A table of the top 10 by score with columns: Score, Title, Company, Country, Location, Salary, Visa notes, Why it fits (one line), Link (an <a> \"View job\" link).\n- If nothing meets the minimum score, say so and suggest 2 changes to my settings.\n- Footer: \"Jobs by Adzuna · Sent by your RoleScout workflow\".",
+        "options": {
+          "systemMessage": "You are RoleScout, a careful job-search agent. You only report real jobs returned by tools. Be concise.",
+          "maxIterations": 40
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "e64fd8f9-88c8-4a43-b81d-e58122b2c780",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        208
+      ],
+      "id": "84e1d68c-6d00-4203-a753-62c6850c2a08",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://mcp.rolescout.online/mcp",
+        "authentication": "mcpOAuth2Api",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.4,
+      "position": [
+        416,
+        208
+      ],
+      "id": "8f37cde4-36ea-4e07-95ef-597eb03b0545",
+      "name": "MCP Client"
+    },
+    {
+      "parameters": {
+        "fromEmail": "you@gmail.com",
+        "toEmail": "={{ $('Your settings.').item.json.emailTo }}",
+        "subject": "=RoleScout: your jobs for {{ $now.toFormat('d LLL') }}",
+        "html": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "df5b0d02-816b-49d8-9f68-b5fd4fab5139",
+      "name": "Send an Email"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Your settings.",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Your settings.": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": []
+}
